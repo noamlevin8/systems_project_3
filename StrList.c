@@ -299,5 +299,128 @@ void StrList_removeAt(StrList* StrList, int index){
 }
 
 int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
+    if (StrList_size(StrList1) != StrList_size(StrList2))
+    {
+        return 0;
+    }
+
+    struct Node *c1 = StrList1->head;
+    struct Node *c2 = StrList2->head;
+
+    while (c1 != NULL && c2 !=NULL)
+    {
+        if (!strcmp(c1->data, c2->data))
+        {
+            return 0;
+        }
+        
+        c1 = c1->next;
+        c2 = c2->next;
+    }
+    return 1;
+}
+
+StrList* StrList_clone(const StrList* StrList){
+    if (StrList_size(StrList) <= 0)
+    {
+        return NULL;
+    }
+
+    struct Node *first = creat_node(StrList->head->data);
+    struct _StrList *StrList_new = StrList_alloc();
+
+    StrList_new->head = first;
+
+    struct Node *c1 = StrList->head->next;
+    struct Node *c2 = StrList_new->head->next;
+
+    while (c1 != NULL)
+    {
+        c2->next = creat_node(c1->next->data);
+        c2 = c2->next;
+        c1 = c1->next;
+    }
+    return StrList_new;
+}
+
+void StrList_reverse( StrList* StrList){
+    if (StrList_size(StrList) <= 0)
+    {
+        return;
+    }
     
+    struct _StrList *StrList_new = StrList_alloc();
+    struct Node *current = StrList->head;
+    struct Node *current_new = StrList_new->head->next;
+
+    while (current != NULL)
+    {
+        struct Node *temp = creat_node(current->data);
+        StrList_new->head = temp;
+        StrList_new->head->next = current_new;
+        current_new = StrList_new->head;
+        current = current->next;
+    }
+
+    current_new = StrList_new->head;
+    current = StrList->head;
+    struct Node *temp;
+
+    while (current_new != NULL)
+    {
+        temp = current_new;
+        current->data = current_new->data;
+        current_new = current_new->next;
+        free(temp->data);
+        free(temp);
+    }
+    
+}
+
+void StrList_sort( StrList* StrList){
+    struct Node *sorted = NULL;
+    struct Node *temp = NULL;
+    struct Node *current = NULL;
+
+    while (current != NULL)
+    {
+        current = StrList->head;
+        StrList->head = StrList->head->next;
+
+        if (sorted == NULL || strcmp(current->data, sorted->data) <= 0)
+        {
+            current->next = sorted;
+            sorted = current;
+        }
+        
+        else
+        {
+            temp = sorted;
+
+            while (temp->next != NULL && strcmp(current->data, temp->next->data) > 0)
+            {
+                temp = temp->next;
+            }
+
+            current->next = temp->next;
+            temp->next = current;
+        }
+        
+    }
+    StrList->head = sorted;
+}
+
+int StrList_isSorted(StrList* StrList){
+    struct Node *current = StrList->head;
+
+    while (current->next != NULL)
+    {
+        if (strcmp(current->data, current->next->data) > 0)
+        {
+            return 0;
+        }
+        
+        current = current->next;
+    }
+    return 1;
 }
