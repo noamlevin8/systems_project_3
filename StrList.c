@@ -36,8 +36,8 @@ StrList* StrList_alloc(){
 
 void StrList_free(StrList* StrList){
     struct Node *current = StrList->head;
-    struct Node *next;
-
+    struct Node *next = NULL;
+    
     while (current != NULL)
     {
         next = current->next;
@@ -170,5 +170,134 @@ void StrList_printAt(const StrList* Strlist,int index){
 }
 
 int StrList_printLen(const StrList* Strlist){
+    struct Node *current = Strlist->head;
+    int count = 0;
+
+    if (current != NULL)
+    {
+        while (current != NULL)
+        {
+            count += strlen(current->data);
+            current = current->next;
+        }
+    }
+
+    else
+    {
+        printf("list is empty!");
+    }
+
+    return count;
+}
+
+int StrList_count(StrList* StrList, const char* data){
+    struct Node *current = StrList->head;
+    int count = 0;
+
+    if (current != NULL)
+    {
+        while (current != NULL)
+        {
+            if (strcmp(current->data, data) == 0)
+            {
+                count++;
+            }
+            
+            current = current->next;
+        }
+    }
+
+    else
+    {
+        printf("list is empty!");
+    }
+
+    return count;
+}
+
+void StrList_remove(StrList* StrList, const char* data){
+    struct Node *current = StrList->head;
+    int count = StrList_count(StrList, data);
+
+    if (count == 0)
+    {
+        struct Node *last = current;
+        while (count != 0)
+        {
+            if (strcmp(current->data, data) == 0)
+            {
+                if (last == current)
+                {
+                    StrList->head = current->next;
+
+                    free(current->data);
+                    free(current);
+
+                    last = StrList->head;
+                    current = StrList->head;
+                }
+                else
+                {
+                    last->next = current->next;
+
+                    free(current->data);
+                    free(current);
+
+                    current = last->next;
+                }
+
+                count--;
+            }
+            
+            last = current;
+            current = current->next;
+        }
+    }
+
+    else
+    {
+        printf("given string is not on the list!");
+    }
+}
+
+void StrList_removeAt(StrList* StrList, int index){
+    struct Node *current = StrList->head;
+    int count = 0;
+
+    if (index < 0)
+    {
+        printf("neggative index");
+        return;
+    }
+    
+    if (index == 0)
+    {
+        StrList->head = current->next;
+        free(current->data);
+        free(current);
+    }
+    
+    else if (StrList_size(StrList) > index)
+    {
+        while (count != index-1)
+        {
+            current = current->next;
+            count++;
+        }
+
+        struct Node *temp = current->next;
+        current->next = temp->next;
+
+        free(temp->data);
+        free(temp);
+    }
+
+    else
+    {
+        printf("index too big");
+    }
+}
+
+int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
     
 }
