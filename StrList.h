@@ -111,3 +111,18 @@ void StrList_sort( StrList* StrList);
  */
 int StrList_isSorted(StrList* StrList);
 
+/*
+ * Node represents a Node data structure.
+*/
+struct Node;
+
+/*
+ * Creats a new Node.
+*/
+struct Node* creat_node(char *str);
+
+/*
+ * Buliding a new list.
+*/
+void buildList(StrList* StrList, int length, char* str);
+

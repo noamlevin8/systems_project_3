@@ -425,3 +425,35 @@ int StrList_isSorted(StrList* StrList){
     }
     return 1;
 }
+
+void buildList(StrList* StrList, int length, char* str){
+    int count = 0;
+    int j = 0;
+    char substring;
+
+    for (int i = 0; i < length; i++)
+    {
+        while (str[j] != ' ')
+        {
+            count++;
+            j++;
+        }
+
+        strncpy(substring, str, count);
+
+        if (i == 0)
+        {
+            StrList->head->data = substring;
+        }
+        
+        else
+        {
+            StrList_insertLast(StrList, substring);
+        }
+        
+        j++;
+        count = 0;
+        str += j;
+    }
+    
+}
