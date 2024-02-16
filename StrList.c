@@ -31,7 +31,9 @@ struct Node* creat_node(char *str){
 
 
 StrList* StrList_alloc(){
-
+    struct _StrList *new_list;
+    new_list->head = creat_node(NULL);
+    return new_list;
 }
 
 void StrList_free(StrList* StrList){
@@ -326,10 +328,9 @@ StrList* StrList_clone(const StrList* StrList){
         return NULL;
     }
 
-    struct Node *first = creat_node(StrList->head->data);
     struct _StrList *StrList_new = StrList_alloc();
 
-    StrList_new->head = first;
+    StrList_new->head->data = StrList->head->data;
 
     struct Node *c1 = StrList->head->next;
     struct Node *c2 = StrList_new->head->next;
@@ -351,7 +352,7 @@ void StrList_reverse( StrList* StrList){
     
     struct _StrList *StrList_new = StrList_alloc();
     struct Node *current = StrList->head;
-    struct Node *current_new = StrList_new->head->next;
+    struct Node *current_new = StrList_new->head;
 
     while (current != NULL)
     {
