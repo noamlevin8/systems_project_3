@@ -401,10 +401,10 @@ void StrList_reverse( StrList* StrList){
         current = current->next;
         free(str);
     }
-    
-    struct _StrList *tempList = StrList;
+
+    //struct _StrList *tempList = StrList;
     StrList = StrList_new;
-    StrList_free(tempList);
+    //StrList_free(tempList);
 }
 
 void StrList_sort( StrList* StrList){
