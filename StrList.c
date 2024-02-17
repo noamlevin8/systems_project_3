@@ -19,11 +19,13 @@ struct _StrList
 //new
 struct Node* creat_node(const char *str){
     struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
+
     if (new_node == NULL)
     {
         perror("Memory allocation failed");
         exit(EXIT_FAILURE);
     }
+
     new_node->data = strdup(str);
     new_node->next = NULL;
 
@@ -33,7 +35,13 @@ struct Node* creat_node(const char *str){
 
 StrList* StrList_alloc(){
     struct _StrList *new_list = (struct _StrList*)malloc(sizeof(struct _StrList));
-    //new_list->head = creat_node("");
+
+    if (new_list == NULL)
+    {
+        perror("Memory allocation failed");
+        exit(EXIT_FAILURE);
+    }
+
     return new_list;
 }
 
@@ -48,6 +56,7 @@ void StrList_free(StrList* StrList){
         free(current);
         current = next;
     }
+
     free(StrList);
 }
 
@@ -88,51 +97,48 @@ void StrList_insertAt(StrList* StrList, const char* data, int index){
         else
         {
             return;
-
-            // struct Node *new_node = creat_node(data);
-            // StrList->head->next = StrList->head;
-            // StrList->head = new_node;
         }
     }
-
-    struct Node *current = StrList->head;
-    int count = 0;
-
-    if (index < 0)
+    else
     {
-        printf("neggative index");
-        return;
-    }
-    
-    else if (StrList_size(StrList) >= index)
-    {
-        while (count != index-1)
+        struct Node *current = StrList->head;
+        int count = 0;
+
+        if (index < 0)
         {
-            current = current->next;
-            count++;
+            printf("neggative index");
+            return;
         }
-    
-        if (current->next == NULL)
+        
+        else if (StrList_size(StrList) >= index)
         {
-            struct Node *new_node = creat_node(data);
-            current->next = new_node;
+            while (count != index-1)
+            {
+                current = current->next;
+                count++;
+            }
+        
+            if (current->next == NULL)
+            {
+                struct Node *new_node = creat_node(data);
+                current->next = new_node;
+            }
+
+            else
+            {
+                struct Node *temp = current->next;
+                struct Node *new_node = creat_node(data);
+                current->next = new_node;
+                new_node->next = temp;
+            }
         }
 
         else
         {
-            struct Node *temp = current->next;
-            struct Node *new_node = creat_node(data);
-            current->next = new_node;
-            new_node->next = temp;
+            printf("index too big");
+            return;
         }
     }
-
-    else
-    {
-        printf("index too big");
-        return;
-    }
-
     StrList->size++;
 }
 
@@ -202,7 +208,7 @@ int StrList_printLen(const StrList* Strlist){
 
     else
     {
-        printf("list is empty!");
+        printf("list is empty!\n");
     }
 
     return count;
@@ -227,7 +233,7 @@ int StrList_count(StrList* StrList, const char* data){
 
     else
     {
-        printf("list is empty!");
+        printf("list is empty!\n");
     }
 
     return count;
@@ -278,7 +284,7 @@ void StrList_remove(StrList* StrList, const char* data){
 
     else
     {
-        printf("given string is not on the list!");
+        printf("given string is not on the list!\n");
     }
 }
 
@@ -288,7 +294,7 @@ void StrList_removeAt(StrList* StrList, int index){
 
     if (index < 0)
     {
-        printf("neggative index");
+        printf("neggative index\n");
         return;
     }
     
@@ -316,7 +322,7 @@ void StrList_removeAt(StrList* StrList, int index){
 
     else
     {
-        printf("index too big");
+        printf("index too big\n");
         return;
     }
     StrList->size--;
@@ -331,7 +337,7 @@ int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
     struct Node *c1 = StrList1->head;
     struct Node *c2 = StrList2->head;
 
-    while (c1 != NULL && c2 !=NULL)
+    while (c1 != NULL && c2 != NULL)
     {
         if (!strcmp(c1->data, c2->data))
         {
@@ -350,16 +356,23 @@ StrList* StrList_clone(const StrList* StrList){
         return NULL;
     }
 
+    char* str;
     struct _StrList *StrList_new = StrList_alloc();
 
-    StrList_new->head->data = StrList->head->data;
+    str = (char*)malloc(strlen(StrList->head->data));
+    strcpy(str, StrList->head->data);
+    StrList_new->head = creat_node(str);
+    free(str);
 
     struct Node *c1 = StrList->head->next;
     struct Node *c2 = StrList_new->head->next;
 
     while (c1 != NULL)
     {
-        c2->next = creat_node(c1->next->data);
+        str = (char*)malloc(strlen(c1->next->data));
+        strcpy(str, c1->next->data);
+        c2->next = creat_node(str);
+        free(str);
         c2 = c2->next;
         c1 = c1->next;
     }
@@ -375,28 +388,20 @@ void StrList_reverse( StrList* StrList){
     struct _StrList *StrList_new = StrList_alloc();
     struct Node *current = StrList->head;
     struct Node *current_new = StrList_new->head;
+    char* str;
 
     while (current != NULL)
     {
-        struct Node *temp = creat_node(current->data);
+        str = (char*)malloc(strlen(current->data));
+        strcpy(str, current->data);
+        struct Node *temp = creat_node(str);
         StrList_new->head = temp;
         temp->next = current_new;
         current_new = StrList_new->head;
         current = current->next;
+        free(str);
     }
-
-    // current_new = StrList_new->head;
-    // current = StrList->head;
-    // struct Node *temp;
-
-    // while (current_new != NULL)
-    // {
-    //     temp = current_new;
-    //     current->data = current_new->data;
-    //     current_new = current_new->next;
-    //     free(temp->data);
-    //     free(temp);
-    // }
+    
     struct _StrList *tempList = StrList;
     StrList = StrList_new;
     StrList_free(tempList);
