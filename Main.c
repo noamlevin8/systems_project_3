@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <string.h>
 #include "StrList.h"
 
 #define Max_Size_Str 30
 
 int main(){
     int length;
-    char *str = NULL;
+    char *str = (char*)malloc(Max_Size_Str);
     int index;
     int num;
     struct _StrList *strlist = StrList_alloc();
@@ -31,19 +32,19 @@ int main(){
     {
         if (num == 1)
         {
-            str = (char*)malloc(Max_Size_Str);
-            scanf("%d", &length);
-            fgets(str, Max_Size_Str, stdin);
-            buildList(strlist, length, str);
-            free(str);
+            //scanf(" %d", &length);
+            //scanf(" %30s", str);
+            //buildList(strlist, length, str);
+            str = "apple banana";
+            buildList(strlist, 2, str);
         }
         
         if (num == 2)
         {
-            scanf("%d", &index);
-            fgets(str, Max_Size_Str, stdin);
-            StrList_insertAt(strlist, str, index);
-            free(str);
+            // scanf("%d", &index);
+            // fgets(str, Max_Size_Str, stdin);
+            // StrList_insertAt(strlist, str, index);
+            // free(str);
         }
 
         if (num == 3)
@@ -58,7 +59,7 @@ int main(){
 
         if (num == 5)
         {
-            scanf("%d", &index);
+            scanf(" %d", &index);
             StrList_printAt(strlist, index);
         }
 
@@ -69,19 +70,19 @@ int main(){
 
         if (num == 7)
         {
-           scanf("%s", str);
+           scanf(" %s", str);
            printf("%d", StrList_count(strlist, str)); 
         }
 
         if (num == 8)
         {
-            scanf("%s", str);
+            scanf(" %s", str);
             StrList_remove(strlist, str);
         }
 
         if (num == 9)
         {
-            scanf("%d", &index);
+            scanf(" %d", &index);
             StrList_removeAt(strlist, index);
         }
 
@@ -104,6 +105,8 @@ int main(){
         {
             printf("%d", StrList_isSorted(strlist));
         }
+        
+        scanf(" %d", &num);
     }
-    
+    free(str);
 }

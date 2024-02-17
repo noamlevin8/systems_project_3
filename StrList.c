@@ -32,7 +32,7 @@ struct Node* creat_node(const char *str){
 
 StrList* StrList_alloc(){
     struct _StrList *new_list = (struct _StrList*)malloc(sizeof(struct _StrList));
-    new_list->head = creat_node("");
+    //new_list->head = creat_node("");
     return new_list;
 }
 
@@ -64,18 +64,44 @@ size_t StrList_size(const StrList* StrList){
 }
 
 void StrList_insertLast(StrList* StrList, const char* data){
-    struct Node *current = StrList->head;
-    struct Node *new_node = creat_node(data);
-
-    while (current->next != NULL)
+    if (StrList->head == NULL)
     {
-        current = current->next;
+        StrList->head = creat_node(data);
     }
     
-    current->next = new_node;
+    else
+    {
+        struct Node *current = StrList->head;
+        struct Node *new_node = creat_node(data);
+
+        while (current->next != NULL)
+        {
+            current = current->next;
+        }
+        
+        current->next = new_node;
+    }
 }
 
 void StrList_insertAt(StrList* StrList, const char* data, int index){
+    if (StrList->head == NULL)
+    {
+        if (index == 0)
+        {
+            struct Node *new_node = creat_node(data);
+            StrList->head = new_node;
+        }
+        
+        else
+        {
+            return;
+
+            // struct Node *new_node = creat_node(data);
+            // StrList->head->next = StrList->head;
+            // StrList->head = new_node;
+        }
+    }
+
     struct Node *current = StrList->head;
     int count = 0;
 
@@ -83,13 +109,6 @@ void StrList_insertAt(StrList* StrList, const char* data, int index){
     {
         printf("neggative index");
         return;
-    }
-    
-    if (index == 0)
-    {
-        struct Node *new_node = creat_node(data);
-        new_node->next = current;
-        StrList->head = new_node;
     }
     
     else if (StrList_size(StrList) >= index)
@@ -430,31 +449,26 @@ int StrList_isSorted(StrList* StrList){
 void buildList(StrList* StrList, int length, char* str){
     int count = 0;
     int j = 0;
-    char* substring = "";
+    char* substring;
 
     for (int i = 0; i < length; i++)
     {
-        while (str[j] != ' ')
+        while (str[j] != ' ' && j < strlen(str))
         {
             count++;
             j++;
         }
-
-        strncpy(substring, str, count);
-
-        if (i == 0)
-        {
-            StrList->head->data = substring;
-        }
         
-        else
-        {
-            StrList_insertLast(StrList, substring);
-        }
+        substring = (char*)malloc(count+1);
+        strncpy(substring, str, count);
+        
+        StrList_insertLast(StrList, substring);
         
         j++;
         count = 0;
         str += j;
+        j = 0;
+        free(substring);
     }
     
 }
