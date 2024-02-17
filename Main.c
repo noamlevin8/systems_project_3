@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include "StrList.h"
 
+#define Max_Size_Str 30
+
 int main(){
-    char c;
-    char *str;
+    int length;
+    char *str = NULL;
     int index;
     int num;
-    struct StrList *strlist = StrList_alloc();
+    struct _StrList *strlist = StrList_alloc();
 
     printf("1 - Insert string to the list\n");
     printf("2 - Insert string at a disired index\n");
@@ -23,81 +25,84 @@ int main(){
     printf("13 - Check if the list sorted lexicographically\n");
     printf("0 - Exit\n");
 
-    scanf("%c", &c);
+    scanf("%d", &num);
 
-    while (c != '0')
+    while (num != 0)
     {
-        if (c == '1')
+        if (num == 1)
         {
-            scanf("%d", &num);
-            scanf("%s", &str);
-            buildList(strlist, num, str);
+            str = (char*)malloc(Max_Size_Str);
+            scanf("%d", &length);
+            fgets(str, Max_Size_Str, stdin);
+            buildList(strlist, length, str);
+            free(str);
         }
         
-        if (c == '2')
+        if (num == 2)
         {
             scanf("%d", &index);
-            scanf("%s", &str);
+            fgets(str, Max_Size_Str, stdin);
             StrList_insertAt(strlist, str, index);
+            free(str);
         }
 
-        if (c == '3')
+        if (num == 3)
         {
             StrList_print(strlist);
         }
 
-        if (c == '4')
+        if (num == 4)
         {
-            printf(StrList_size(strlist));
+            printf("%zu", StrList_size(strlist));
         }
 
-        if (c == '5')
+        if (num == 5)
         {
             scanf("%d", &index);
             StrList_printAt(strlist, index);
         }
 
-        if (c == '6')
+        if (num == 6)
         {
-            printf(StrList_printLen(strlist));
+            printf("%d", StrList_printLen(strlist));
         }
 
-        if (c == '7')
+        if (num == 7)
         {
-           scanf("%s", &str);
-           printf(StrList_count(strlist, str)); 
+           scanf("%s", str);
+           printf("%d", StrList_count(strlist, str)); 
         }
 
-        if (c == '8')
+        if (num == 8)
         {
-            scanf("%s", &str);
+            scanf("%s", str);
             StrList_remove(strlist, str);
         }
 
-        if (c == '9')
+        if (num == 9)
         {
             scanf("%d", &index);
             StrList_removeAt(strlist, index);
         }
 
-        if (c == '10')
+        if (num == 10)
         {
             StrList_reverse(strlist);
         }
 
-        if (c == '11')
+        if (num == 11)
         {
             StrList_free(strlist);
         }
 
-        if (c == '12')
+        if (num == 12)
         {
             StrList_sort(strlist);
         }
 
-        if (c == '13')
+        if (num == 13)
         {
-            printf(StrList_isSorted(strlist));
+            printf("%d", StrList_isSorted(strlist));
         }
     }
     

@@ -119,7 +119,7 @@ struct Node;
 /*
  * Creats a new Node.
 */
-struct Node* creat_node(char *str);
+struct Node* creat_node(const char *str);
 
 /*
  * Buliding a new list.

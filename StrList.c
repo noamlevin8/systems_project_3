@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <StrList.h>
+#include "StrList.h"
 
 //new
 struct Node
@@ -16,7 +16,7 @@ struct _StrList
 };
 
 //new
-struct Node* creat_node(char *str){
+struct Node* creat_node(const char *str){
     struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
     if (new_node == NULL)
     {
@@ -31,8 +31,8 @@ struct Node* creat_node(char *str){
 
 
 StrList* StrList_alloc(){
-    struct _StrList *new_list;
-    new_list->head = creat_node(NULL);
+    struct _StrList *new_list = (struct _StrList*)malloc(sizeof(struct _StrList));
+    new_list->head = creat_node("");
     return new_list;
 }
 
@@ -47,6 +47,7 @@ void StrList_free(StrList* StrList){
         free(current);
         current = next;
     }
+    free(StrList);
 }
 
 size_t StrList_size(const StrList* StrList){
@@ -429,7 +430,7 @@ int StrList_isSorted(StrList* StrList){
 void buildList(StrList* StrList, int length, char* str){
     int count = 0;
     int j = 0;
-    char substring;
+    char* substring = "";
 
     for (int i = 0; i < length; i++)
     {
