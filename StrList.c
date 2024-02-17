@@ -380,31 +380,19 @@ StrList* StrList_clone(const StrList* StrList){
 }
 
 void StrList_reverse( StrList* StrList){
-    if (StrList_size(StrList) <= 0)
-    {
-        return;
-    }
-    
-    struct _StrList *StrList_new = StrList_alloc();
+    struct Node *last = NULL;
     struct Node *current = StrList->head;
-    struct Node *current_new = StrList_new->head;
-    char* str;
+    struct Node *next;
 
     while (current != NULL)
     {
-        str = (char*)malloc(strlen(current->data));
-        strcpy(str, current->data);
-        struct Node *temp = creat_node(str);
-        StrList_new->head = temp;
-        temp->next = current_new;
-        current_new = StrList_new->head;
-        current = current->next;
-        free(str);
+        next = current->next;
+        current->next = last;
+        last = current;
+        current = next;
     }
 
-    //struct _StrList *tempList = StrList;
-    StrList = StrList_new;
-    //StrList_free(tempList);
+    StrList->head = last;
 }
 
 void StrList_sort( StrList* StrList){
