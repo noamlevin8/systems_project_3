@@ -6,7 +6,8 @@
 
 int main(){
     int length;
-    char *str = (char*)malloc(Max_Size_Str);
+    char *str;
+    //char *str = (char*)malloc(Max_Size_Str);
     int index;
     int num;
     struct _StrList *strlist = StrList_alloc();
@@ -41,10 +42,9 @@ int main(){
         
         if (num == 2)
         {
-            // scanf("%d", &index);
-            // fgets(str, Max_Size_Str, stdin);
-            // StrList_insertAt(strlist, str, index);
-            // free(str);
+            //scanf(" %s", str);
+            scanf(" %d", &index);
+            StrList_insertAt(strlist, str, index);
         }
 
         if (num == 3)

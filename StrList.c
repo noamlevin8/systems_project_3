@@ -13,6 +13,7 @@ struct Node
 struct _StrList
 {
     struct Node *head;
+    size_t size;
 };
 
 //new
@@ -51,16 +52,7 @@ void StrList_free(StrList* StrList){
 }
 
 size_t StrList_size(const StrList* StrList){
-    struct Node *current = StrList->head;
-    size_t count = 0;
-
-    while (current != NULL)
-    {
-        count++;
-        current = current->next;
-    }
-    
-    return count;
+    return StrList->size;
 }
 
 void StrList_insertLast(StrList* StrList, const char* data){
@@ -81,6 +73,7 @@ void StrList_insertLast(StrList* StrList, const char* data){
         
         current->next = new_node;
     }
+    StrList->size++;
 }
 
 void StrList_insertAt(StrList* StrList, const char* data, int index){
@@ -137,7 +130,10 @@ void StrList_insertAt(StrList* StrList, const char* data, int index){
     else
     {
         printf("index too big");
+        return;
     }
+
+    StrList->size++;
 }
 
 char* StrList_firstData(const StrList* StrList){
@@ -277,6 +273,7 @@ void StrList_remove(StrList* StrList, const char* data){
                 current = current->next;
             }
         }
+        StrList->size--;
     }
 
     else
@@ -320,7 +317,9 @@ void StrList_removeAt(StrList* StrList, int index){
     else
     {
         printf("index too big");
+        return;
     }
+    StrList->size--;
 }
 
 int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
