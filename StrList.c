@@ -170,11 +170,11 @@ void StrList_printAt(const StrList* Strlist,int index){
 
     if (index < 0)
     {
-        printf("neggative index");
+        printf("neggative index\n");
         return;
     }
     
-    if (StrList_size(Strlist) >= index)
+    if (StrList_size(Strlist) > index)
     {
         while (count != index)
         {
@@ -187,7 +187,7 @@ void StrList_printAt(const StrList* Strlist,int index){
 
     else
     {
-        printf("index too big");
+        printf("index too big\n");
     }
 }
 
@@ -241,9 +241,10 @@ void StrList_remove(StrList* StrList, const char* data){
     struct Node *current = StrList->head;
     int count = StrList_count(StrList, data);
 
-    if (count == 0)
+    if (count != 0)
     {
         struct Node *last = current;
+        struct Node *temp;
         while (count != 0)
         {
             if (strcmp(current->data, data) == 0)
@@ -251,28 +252,30 @@ void StrList_remove(StrList* StrList, const char* data){
                 if (last == current)
                 {
                     StrList->head = current->next;
-
-                    free(current->data);
-                    free(current);
-
                     last = StrList->head;
+                    temp = current;
                     current = StrList->head;
+
+                    free(temp->data);
+                    free(temp);
                 }
                 else
                 {
                     last->next = current->next;
-
-                    free(current->data);
-                    free(current);
-
+                    temp = current;
                     current = last->next;
+
+                    free(temp->data);
+                    free(temp);
                 }
 
                 count--;
             }
-            
-            last = current;
-            current = current->next;
+            else
+            {
+                last = current;
+                current = current->next;
+            }
         }
     }
 
@@ -378,24 +381,26 @@ void StrList_reverse( StrList* StrList){
     {
         struct Node *temp = creat_node(current->data);
         StrList_new->head = temp;
-        StrList_new->head->next = current_new;
+        temp->next = current_new;
         current_new = StrList_new->head;
         current = current->next;
     }
 
-    current_new = StrList_new->head;
-    current = StrList->head;
-    struct Node *temp;
+    // current_new = StrList_new->head;
+    // current = StrList->head;
+    // struct Node *temp;
 
-    while (current_new != NULL)
-    {
-        temp = current_new;
-        current->data = current_new->data;
-        current_new = current_new->next;
-        free(temp->data);
-        free(temp);
-    }
-    
+    // while (current_new != NULL)
+    // {
+    //     temp = current_new;
+    //     current->data = current_new->data;
+    //     current_new = current_new->next;
+    //     free(temp->data);
+    //     free(temp);
+    // }
+    struct _StrList *tempList = StrList;
+    StrList = StrList_new;
+    StrList_free(tempList);
 }
 
 void StrList_sort( StrList* StrList){
@@ -403,7 +408,7 @@ void StrList_sort( StrList* StrList){
     struct Node *temp = NULL;
     struct Node *current = NULL;
 
-    while (current != NULL)
+    while (StrList->head != NULL)
     {
         current = StrList->head;
         StrList->head = StrList->head->next;

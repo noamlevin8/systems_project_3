@@ -35,8 +35,8 @@ int main(){
             //scanf(" %d", &length);
             //scanf(" %30s", str);
             //buildList(strlist, length, str);
-            str = "apple banana";
-            buildList(strlist, 2, str);
+            str = "apple orange banana apple";
+            buildList(strlist, 4, str);
         }
         
         if (num == 2)
@@ -50,11 +50,12 @@ int main(){
         if (num == 3)
         {
             StrList_print(strlist);
+
         }
 
         if (num == 4)
         {
-            printf("%zu", StrList_size(strlist));
+            printf("%zu\n", StrList_size(strlist));
         }
 
         if (num == 5)
@@ -65,18 +66,18 @@ int main(){
 
         if (num == 6)
         {
-            printf("%d", StrList_printLen(strlist));
+            printf("%d\n", StrList_printLen(strlist));
         }
 
         if (num == 7)
         {
-           scanf(" %s", str);
-           printf("%d", StrList_count(strlist, str)); 
+            //scanf(" %s", str);
+            printf("%d\n", StrList_count(strlist, str)); 
         }
 
         if (num == 8)
         {
-            scanf(" %s", str);
+            //scanf(" %s", str);
             StrList_remove(strlist, str);
         }
 
@@ -103,7 +104,7 @@ int main(){
 
         if (num == 13)
         {
-            printf("%d", StrList_isSorted(strlist));
+            printf("%d\n", StrList_isSorted(strlist));
         }
         
         scanf(" %d", &num);
