@@ -109,5 +109,5 @@ int main(){
         
         scanf(" %d", &num);
     }
-    free(str);
+    //free(str);
 }
