@@ -2,30 +2,29 @@
 #include <string.h>
 #include "StrList.h"
 
-#define Max_Size_Str 30
+#define Max_Size_Str 100
 
 int main(){
     int length;
-    char *str;
-    //char *str = (char*)malloc(Max_Size_Str);
+    char *str = (char*)malloc(Max_Size_Str);
     int index;
     int num;
     struct _StrList *strlist = StrList_alloc();
 
-    printf("1 - Insert string to the list\n");
-    printf("2 - Insert string at a disired index\n");
-    printf("3 - Print the list\n");
-    printf("4 - Print the list length\n");
-    printf("5 - Print string at desired index\n");
-    printf("6 - Print the number of chars in the list\n");
-    printf("7 - Insert a string and print how many times it is found on the list\n");
-    printf("8 - Insert a string and remove all appearances from the list\n");
-    printf("9 - Remove string at a given index\n");
-    printf("10 - Reversing the list\n");
-    printf("11 - Deleting the list\n");
-    printf("12 - Sort the list in lexicographical order\n");
-    printf("13 - Check if the list sorted lexicographically\n");
-    printf("0 - Exit\n");
+    // printf("1 - Insert string to the list\n");
+    // printf("2 - Insert string at a disired index\n");
+    // printf("3 - Print the list\n");
+    // printf("4 - Print the list length\n");
+    // printf("5 - Print string at desired index\n");
+    // printf("6 - Print the number of chars in the list\n");
+    // printf("7 - Insert a string and print how many times it is found on the list\n");
+    // printf("8 - Insert a string and remove all appearances from the list\n");
+    // printf("9 - Remove string at a given index\n");
+    // printf("10 - Reversing the list\n");
+    // printf("11 - Deleting the list\n");
+    // printf("12 - Sort the list in lexicographical order\n");
+    // printf("13 - Check if the list sorted lexicographically\n");
+    // printf("0 - Exit\n");
 
     scanf("%d", &num);
 
@@ -33,17 +32,16 @@ int main(){
     {
         if (num == 1)
         {
-            //scanf(" %d", &length);
-            //scanf(" %30s", str);
-            //buildList(strlist, length, str);
-            str = "apple orange banana apple";
-            buildList(strlist, 4, str);
+            scanf(" %d", &length);
+            scanf(" %[^\n]s", str);
+            str = realloc(str, strlen(str));
+            buildList(strlist, length, str);
         }
         
         if (num == 2)
         {
-            //scanf(" %s", str);
             scanf(" %d", &index);
+            scanf(" %s", str);
             StrList_insertAt(strlist, str, index);
         }
 
@@ -71,13 +69,13 @@ int main(){
 
         if (num == 7)
         {
-            //scanf(" %s", str);
+            scanf(" %s", str);
             printf("%d\n", StrList_count(strlist, str)); 
         }
 
         if (num == 8)
         {
-            //scanf(" %s", str);
+            scanf(" %s", str);
             StrList_remove(strlist, str);
         }
 
@@ -104,10 +102,17 @@ int main(){
 
         if (num == 13)
         {
-            printf("%d\n", StrList_isSorted(strlist));
+            if (StrList_isSorted)
+            {
+                printf("true\n");
+            }
+            else
+            {
+                printf("false\n");
+            }
         }
         
         scanf(" %d", &num);
     }
-    //free(str);
+    free(str);
 }

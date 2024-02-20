@@ -160,10 +160,10 @@ void StrList_print(const StrList* StrList){
         printf("%s\n", current->data);
     }
 
-    else
-    {
-        printf("list is empty!");
-    }
+    // else
+    // {
+    //     printf("list is empty!");
+    // }
 }
 
 void StrList_printAt(const StrList* Strlist,int index){
@@ -206,10 +206,10 @@ int StrList_printLen(const StrList* Strlist){
         }
     }
 
-    else
-    {
-        printf("list is empty!\n");
-    }
+    // else
+    // {
+    //     printf("list is empty!\n");
+    // }
 
     return count;
 }
@@ -231,10 +231,10 @@ int StrList_count(StrList* StrList, const char* data){
         }
     }
 
-    else
-    {
-        printf("list is empty!\n");
-    }
+    // else
+    // {
+    //     printf("list is empty!\n");
+    // }
 
     return count;
 }
