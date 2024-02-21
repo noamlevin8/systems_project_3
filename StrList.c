@@ -17,7 +17,7 @@ struct _StrList
 };
 
 //new
-struct Node* creat_node(const char *str){
+struct Node* create_node(const char *str){
     struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
 
     if (new_node == NULL)
@@ -56,8 +56,7 @@ void StrList_free(StrList* StrList){
         free(current);
         current = next;
     }
-
-    free(StrList);
+    StrList->size = 0;
 }
 
 size_t StrList_size(const StrList* StrList){
@@ -67,13 +66,13 @@ size_t StrList_size(const StrList* StrList){
 void StrList_insertLast(StrList* StrList, const char* data){
     if (StrList->head == NULL)
     {
-        StrList->head = creat_node(data);
+        StrList->head = create_node(data);
     }
     
     else
     {
         struct Node *current = StrList->head;
-        struct Node *new_node = creat_node(data);
+        struct Node *new_node = create_node(data);
 
         while (current->next != NULL)
         {
@@ -90,7 +89,7 @@ void StrList_insertAt(StrList* StrList, const char* data, int index){
     {
         if (index == 0)
         {
-            struct Node *new_node = creat_node(data);
+            struct Node *new_node = create_node(data);
             StrList->head = new_node;
         }
         
@@ -120,14 +119,14 @@ void StrList_insertAt(StrList* StrList, const char* data, int index){
         
             if (current->next == NULL)
             {
-                struct Node *new_node = creat_node(data);
+                struct Node *new_node = create_node(data);
                 current->next = new_node;
             }
 
             else
             {
                 struct Node *temp = current->next;
-                struct Node *new_node = creat_node(data);
+                struct Node *new_node = create_node(data);
                 current->next = new_node;
                 new_node->next = temp;
             }
@@ -282,15 +281,20 @@ void StrList_remove(StrList* StrList, const char* data){
         StrList->size--;
     }
 
-    else
-    {
-        printf("given string is not on the list!\n");
-    }
+    // else
+    // {
+    //     printf("given string is not on the list!\n");
+    // }
 }
 
 void StrList_removeAt(StrList* StrList, int index){
     struct Node *current = StrList->head;
     int count = 0;
+
+    if (StrList == NULL || StrList->head == NULL)
+    {
+        return;
+    }
 
     if (index < 0)
     {
@@ -339,7 +343,7 @@ int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
 
     while (c1 != NULL && c2 != NULL)
     {
-        if (!strcmp(c1->data, c2->data))
+        if (strcmp(c1->data, c2->data) != 0)
         {
             return 0;
         }
@@ -361,21 +365,23 @@ StrList* StrList_clone(const StrList* StrList){
 
     str = (char*)malloc(strlen(StrList->head->data));
     strcpy(str, StrList->head->data);
-    StrList_new->head = creat_node(str);
+    StrList_new->head = create_node(str);
     free(str);
 
-    struct Node *c1 = StrList->head->next;
-    struct Node *c2 = StrList_new->head->next;
+    struct Node *c1 = StrList->head;
+    struct Node *c2 = StrList_new->head;
 
-    while (c1 != NULL)
+    while (c1->next != NULL)
     {
         str = (char*)malloc(strlen(c1->next->data));
         strcpy(str, c1->next->data);
-        c2->next = creat_node(str);
+        c2->next = create_node(str);
         free(str);
         c2 = c2->next;
         c1 = c1->next;
     }
+
+    StrList_new->size = StrList_size(StrList);
     return StrList_new;
 }
 
@@ -429,18 +435,12 @@ void StrList_sort( StrList* StrList){
 }
 
 int StrList_isSorted(StrList* StrList){
-    struct Node *current = StrList->head;
-
-    while (current->next != NULL)
-    {
-        if (strcmp(current->data, current->next->data) > 0)
-        {
-            return 0;
-        }
-        
-        current = current->next;
-    }
-    return 1;
+    struct _StrList* strlist_c = StrList_clone(StrList);
+    StrList_sort(strlist_c);
+    int result =  StrList_isEqual(StrList, strlist_c);
+    StrList_free(strlist_c);
+    free(strlist_c);
+    return result;
 }
 
 void buildList(StrList* StrList, int length, char* str){

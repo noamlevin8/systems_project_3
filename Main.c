@@ -102,7 +102,7 @@ int main(){
 
         if (num == 13)
         {
-            if (StrList_isSorted)
+            if (StrList_isSorted(strlist))
             {
                 printf("true\n");
             }
@@ -115,4 +115,5 @@ int main(){
         scanf(" %d", &num);
     }
     free(str);
+    free(strlist);
 }
