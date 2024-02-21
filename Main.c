@@ -35,6 +35,7 @@ int main(){
             scanf(" %d", &length);
             str = (char*)malloc(Max_Size_Str*length);
             scanf(" %[^\n]s", str);
+            printf("%s", str);
             str = realloc(str, strlen(str));
             buildList(strlist, length, str);
             free(str);
@@ -122,5 +123,6 @@ int main(){
         
         scanf(" %d", &num);
     }
+    StrList_free(strlist);
     free(strlist);
 }
