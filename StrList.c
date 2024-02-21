@@ -46,6 +46,11 @@ StrList* StrList_alloc(){
 }
 
 void StrList_free(StrList* StrList){
+    if (StrList == NULL)
+    {
+        return;
+    }
+    
     struct Node *current = StrList->head;
     struct Node *next = NULL;
     
@@ -64,6 +69,11 @@ size_t StrList_size(const StrList* StrList){
 }
 
 void StrList_insertLast(StrList* StrList, const char* data){
+    if (StrList == NULL)
+    {
+        return;
+    }
+    
     if (StrList->head == NULL)
     {
         StrList->head = create_node(data);
@@ -85,6 +95,11 @@ void StrList_insertLast(StrList* StrList, const char* data){
 }
 
 void StrList_insertAt(StrList* StrList, const char* data, int index){
+    if (StrList == NULL)
+    {
+        return;
+    }
+
     if (StrList->head == NULL)
     {
         if (index == 0)
@@ -105,7 +120,7 @@ void StrList_insertAt(StrList* StrList, const char* data, int index){
 
         if (index < 0)
         {
-            printf("neggative index");
+            //printf("neggative index\n");
             return;
         }
         
@@ -134,7 +149,7 @@ void StrList_insertAt(StrList* StrList, const char* data, int index){
 
         else
         {
-            printf("index too big");
+            //printf("index too big\n");
             return;
         }
     }
@@ -142,10 +157,20 @@ void StrList_insertAt(StrList* StrList, const char* data, int index){
 }
 
 char* StrList_firstData(const StrList* StrList){
+    if (StrList == NULL)
+    {
+        return NULL;
+    }
+    
     return StrList->head->data;
 }
 
 void StrList_print(const StrList* StrList){
+    if (StrList == NULL)
+    {
+        return;
+    }
+    
     struct Node *current = StrList->head;
 
     if (current != NULL)
@@ -166,12 +191,17 @@ void StrList_print(const StrList* StrList){
 }
 
 void StrList_printAt(const StrList* Strlist,int index){
+    if (Strlist == NULL)
+    {
+        return;
+    }
+    
     struct Node *current = Strlist->head;
     int count = 0;
 
     if (index < 0)
     {
-        printf("neggative index\n");
+        //printf("neggative index\n");
         return;
     }
     
@@ -186,13 +216,18 @@ void StrList_printAt(const StrList* Strlist,int index){
         printf("%s\n", current->data);
     }
 
-    else
-    {
-        printf("index too big\n");
-    }
+    // else
+    // {
+    //     printf("index too big\n");
+    // }
 }
 
 int StrList_printLen(const StrList* Strlist){
+    if (Strlist == NULL)
+    {
+        return 0;
+    }
+
     struct Node *current = Strlist->head;
     int count = 0;
 
@@ -214,6 +249,11 @@ int StrList_printLen(const StrList* Strlist){
 }
 
 int StrList_count(StrList* StrList, const char* data){
+    if (StrList == NULL)
+    {
+        return 0;
+    }
+
     struct Node *current = StrList->head;
     int count = 0;
 
@@ -239,6 +279,11 @@ int StrList_count(StrList* StrList, const char* data){
 }
 
 void StrList_remove(StrList* StrList, const char* data){
+    if (StrList == NULL)
+    {
+        return;
+    }
+
     struct Node *current = StrList->head;
     int count = StrList_count(StrList, data);
 
@@ -288,17 +333,17 @@ void StrList_remove(StrList* StrList, const char* data){
 }
 
 void StrList_removeAt(StrList* StrList, int index){
-    struct Node *current = StrList->head;
-    int count = 0;
-
     if (StrList == NULL || StrList->head == NULL)
     {
         return;
     }
 
+    struct Node *current = StrList->head;
+    int count = 0;
+
     if (index < 0)
     {
-        printf("neggative index\n");
+        //printf("neggative index\n");
         return;
     }
     
@@ -326,13 +371,18 @@ void StrList_removeAt(StrList* StrList, int index){
 
     else
     {
-        printf("index too big\n");
+        //printf("index too big\n");
         return;
     }
     StrList->size--;
 }
 
 int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
+    if (StrList1 == NULL || StrList2 == NULL)
+    {
+        return 0;
+    }
+    
     if (StrList_size(StrList1) != StrList_size(StrList2))
     {
         return 0;
@@ -355,7 +405,7 @@ int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
 }
 
 StrList* StrList_clone(const StrList* StrList){
-    if (StrList_size(StrList) <= 0)
+    if (StrList == NULL || StrList_size(StrList) <= 0)
     {
         return NULL;
     }
@@ -386,6 +436,11 @@ StrList* StrList_clone(const StrList* StrList){
 }
 
 void StrList_reverse( StrList* StrList){
+    if (StrList == NULL || StrList_size(StrList) <= 1)
+    {
+        return;
+    }
+    
     struct Node *last = NULL;
     struct Node *current = StrList->head;
     struct Node *next;
@@ -402,6 +457,11 @@ void StrList_reverse( StrList* StrList){
 }
 
 void StrList_sort( StrList* StrList){
+    if (StrList == NULL || StrList_size(StrList) <= 1)
+    {
+        return;
+    }
+    
     struct Node *sorted = NULL;
     struct Node *temp = NULL;
     struct Node *current = NULL;
@@ -435,11 +495,18 @@ void StrList_sort( StrList* StrList){
 }
 
 int StrList_isSorted(StrList* StrList){
+    if (StrList == NULL)
+    {
+        return;
+    }
+    
     struct _StrList* strlist_c = StrList_clone(StrList);
     StrList_sort(strlist_c);
     int result =  StrList_isEqual(StrList, strlist_c);
+
     StrList_free(strlist_c);
     free(strlist_c);
+
     return result;
 }
 
