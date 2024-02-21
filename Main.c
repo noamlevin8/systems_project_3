@@ -2,7 +2,7 @@
 #include <string.h>
 #include "StrList.h"
 
-#define Max_Size_Str 1000
+#define Max_Size_Str 100
 
 int main(){
     int length;
