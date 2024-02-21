@@ -497,7 +497,7 @@ void StrList_sort( StrList* StrList){
 int StrList_isSorted(StrList* StrList){
     if (StrList == NULL)
     {
-        return;
+        return 0;
     }
     
     struct _StrList* strlist_c = StrList_clone(StrList);
