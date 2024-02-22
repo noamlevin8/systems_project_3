@@ -121,7 +121,7 @@ void StrList_insertAt(StrList* StrList, const char* data, int index){
 
         if (index < 0)
         {
-            //printf("neggative index\n");
+            // neggative index
             return;
         }
         
@@ -150,7 +150,7 @@ void StrList_insertAt(StrList* StrList, const char* data, int index){
 
         else
         {
-            //printf("index too big\n");
+            // index too big
             return;
         }
     }
@@ -169,6 +169,7 @@ char* StrList_firstData(const StrList* StrList){
 void StrList_print(const StrList* StrList){
     if (StrList == NULL)
     {
+        printf("\n");
         return;
     }
     
@@ -184,16 +185,12 @@ void StrList_print(const StrList* StrList){
     
         printf("%s\n", current->data);
     }
-
-    // else
-    // {
-    //     printf("list is empty!");
-    // }
 }
 
 void StrList_printAt(const StrList* Strlist,int index){
     if (Strlist == NULL)
     {
+        printf("\n");
         return;
     }
     
@@ -202,7 +199,7 @@ void StrList_printAt(const StrList* Strlist,int index){
 
     if (index < 0)
     {
-        //printf("neggative index\n");
+        // neggative index
         return;
     }
     
@@ -216,11 +213,6 @@ void StrList_printAt(const StrList* Strlist,int index){
     
         printf("%s\n", current->data);
     }
-
-    // else
-    // {
-    //     printf("index too big\n");
-    // }
 }
 
 int StrList_printLen(const StrList* Strlist){
@@ -240,11 +232,6 @@ int StrList_printLen(const StrList* Strlist){
             current = current->next;
         }
     }
-
-    // else
-    // {
-    //     printf("list is empty!\n");
-    // }
 
     return count;
 }
@@ -270,11 +257,6 @@ int StrList_count(StrList* StrList, const char* data){
             current = current->next;
         }
     }
-
-    // else
-    // {
-    //     printf("list is empty!\n");
-    // }
 
     return count;
 }
@@ -326,11 +308,6 @@ void StrList_remove(StrList* StrList, const char* data){
         }
         StrList->size--;
     }
-
-    // else
-    // {
-    //     printf("given string is not on the list!\n");
-    // }
 }
 
 void StrList_removeAt(StrList* StrList, int index){
@@ -344,7 +321,7 @@ void StrList_removeAt(StrList* StrList, int index){
 
     if (index < 0)
     {
-        //printf("neggative index\n");
+        // neggative index
         return;
     }
     
@@ -372,7 +349,7 @@ void StrList_removeAt(StrList* StrList, int index){
 
     else
     {
-        //printf("index too big\n");
+        // index too big
         return;
     }
     StrList->size--;
@@ -533,5 +510,4 @@ void buildList(StrList* StrList, int length, char* str){
         j = 0;
         free(substring);
     }
-    
 }
