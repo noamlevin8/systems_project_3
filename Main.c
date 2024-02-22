@@ -29,13 +29,12 @@ int main(){
     scanf("%d", &num);
 
     while (num != 0)
-    {
+    {   
         if (num == 1)
         {
             scanf(" %d", &length);
             str = (char*)malloc(Max_Size_Str*length);
             scanf(" %[^\n]s", str);
-            printf("%s", str);
             str = realloc(str, strlen(str));
             buildList(strlist, length, str);
             free(str);
@@ -120,7 +119,6 @@ int main(){
                 printf("false\n");
             }
         }
-        
         scanf(" %d", &num);
     }
     StrList_free(strlist);

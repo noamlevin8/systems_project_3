@@ -53,6 +53,7 @@ void StrList_free(StrList* StrList){
     
     struct Node *current = StrList->head;
     struct Node *next = NULL;
+    StrList->head = NULL;
     
     while (current != NULL)
     {
@@ -511,25 +512,23 @@ int StrList_isSorted(StrList* StrList){
 }
 
 void buildList(StrList* StrList, int length, char* str){
-    int count = 0;
     int j = 0;
-    char* substring;
 
     for (int i = 0; i < length; i++)
     {
+        char* substring;
         while (str[j] != ' ' && j < strlen(str))
         {
-            count++;
             j++;
         }
         
-        substring = (char*)malloc(count+1);
-        strncpy(substring, str, count);
+        substring = (char*)malloc(j+1);
+        strncpy(substring, str, j);
+        substring[j] = '\0';
         
         StrList_insertLast(StrList, substring);
         
         j++;
-        count = 0;
         str += j;
         j = 0;
         free(substring);
