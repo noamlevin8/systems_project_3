@@ -188,7 +188,7 @@ void StrList_print(const StrList* StrList){
 }
 
 void StrList_printAt(const StrList* Strlist,int index){
-    if (Strlist == NULL || strlist->head == NULL)
+    if (Strlist == NULL || Strlist->head == NULL)
     {
         printf("\n");
         return;
@@ -510,4 +510,5 @@ void buildList(StrList* StrList, int length, char* str){
         j = 0;
         free(substring);
     }
+    
 }
