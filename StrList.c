@@ -383,13 +383,18 @@ int StrList_isEqual(const StrList* StrList1, const StrList* StrList2){
 }
 
 StrList* StrList_clone(const StrList* StrList){
-    if (StrList == NULL || StrList_size(StrList) <= 0)
+    if (StrList == NULL || StrList_size(StrList) < 0)
     {
         return NULL;
     }
 
     char* str;
     struct _StrList *StrList_new = StrList_alloc();
+
+    if(StrList_size(StrList) == 0)
+    {
+        return StrList_new;
+    }
 
     str = (char*)malloc(strlen(StrList->head->data));
     strcpy(str, StrList->head->data);
