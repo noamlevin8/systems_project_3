@@ -29,7 +29,8 @@ char *get_word()
     return word; 
 }
 
-int main(){
+int main()
+{
     int length;
     char *str;
     int index;
@@ -50,7 +51,7 @@ int main(){
                 StrList_insertLast(strlist, str);
                 free(str);
             }
-        
+        }
         if (num == 2)
         {
             scanf(" %d", &index);
