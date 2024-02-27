@@ -2,7 +2,32 @@
 #include <string.h>
 #include "StrList.h"
 
-#define Max_Size_Str 50
+char *get_word() 
+{ 
+    int capacity = 10; 
+    char* word = (char*)malloc(capacity * sizeof(char)); 
+    int i = 0; char c; 
+    while (1) 
+    { 
+        c = getchar(); 
+        if (c == ' ' || c == '\n') 
+        { 
+            if (i == 0) 
+            { 
+                continue; 
+            } 
+            word[i] = '\0'; 
+            break;
+        } 
+        word[i] = c; i++; 
+        if (i >= capacity) 
+        { 
+            capacity *= 2; 
+            word = realloc(word, capacity * sizeof(char));
+        }
+    }
+    return word; 
+}
 
 int main(){
     int length;
@@ -18,18 +43,18 @@ int main(){
         if (num == 1)
         {
             scanf(" %d", &length);
-            str = (char*)malloc(Max_Size_Str*length);
-            scanf(" %[^\n]s", str);
-            str = realloc(str, strlen(str));
-            buildList(strlist, length, str);
-            free(str);
-        }
+
+            for (int i = 0; i < length; i++)
+            {
+                str = get_word();
+                StrList_insertLast(strlist, str);
+                free(str);
+            }
         
         if (num == 2)
         {
-            str = (char*)malloc(Max_Size_Str);
             scanf(" %d", &index);
-            scanf(" %s", str);
+            str = get_word();
             StrList_insertAt(strlist, str, index);
             free(str);
         }
@@ -58,16 +83,14 @@ int main(){
 
         if (num == 7)
         {
-            str = (char*)malloc(Max_Size_Str);
-            scanf(" %s", str);
+            str = get_word();
             printf("%d\n", StrList_count(strlist, str));
             free(str); 
         }
 
         if (num == 8)
         {
-            str = (char*)malloc(Max_Size_Str);
-            scanf(" %s", str);
+            str = get_word();
             StrList_remove(strlist, str);
             free(str);
         }
